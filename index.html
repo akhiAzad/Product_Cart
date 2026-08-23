@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
+        <div class="search">
+            <input  type="text" id="searchInput" placeholder="Search products">
+            <button id="searchButton">Search</button>
+        </div>
         <div class="cart"></div>
         <div class="footer">
-            <p><i class="arrow left"></i> </p>
-
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <p> <i class="arrow right"></i></p>
+            <button class="arrow-button left-button">
+                 <i class="arrow left"></i>
+            </button>
+            <div class="page-numbers"></div>
+            <button class="arrow-button right-button">
+                <i class="arrow right"></i>
+            </button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
