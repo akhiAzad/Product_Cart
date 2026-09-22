@@ -1,3 +1,4 @@
+
 const productsPerPage = 10;
 
 const pagesToShow = 5;
@@ -8,6 +9,8 @@ let totalPages = 1;
 
 let searchText = "";
 
+
+// Cart
 let cartItems = [];
 
 
@@ -58,9 +61,9 @@ async function renderData(page) {
 
     }
 
-    const cart = document.querySelector(".cart");
+    const productList = document.querySelector(".cart");
 
-    cart.innerHTML = "";
+    productList.innerHTML = "";
 
     data.products.forEach(product => {
 
@@ -79,11 +82,12 @@ async function renderData(page) {
         div.addEventListener("click", function () {
 
             showProductDetails(product);
+            
 
         });
 
 
-        cart.appendChild(div);
+        productList.appendChild(div);
 
     });
 
@@ -103,18 +107,23 @@ function showProductDetails(product) {
 
     const productList = document.querySelector(".cart");
 
-    const productDetails = document.querySelector("#productDetails");
+    const productDetails =
+        document.querySelector("#productDetails");
 
-    const footer = document.querySelector(".footer");
+    const cartSection =
+        document.querySelector("#cartSection");
+
+    const footer =
+        document.querySelector(".footer");
 
 
-    // Hide search bar
+    // Hide other sections
     search.style.display = "none";
 
-    // Hide product list
     productList.style.display = "none";
 
-    // Hide pagination
+    cartSection.style.display = "none";
+
     footer.style.display = "none";
 
 
@@ -174,46 +183,376 @@ function showProductDetails(product) {
     `;
 
 
-    // Add to cart
+    // Add to Cart
     const addToCartButton =
         document.querySelector("#addToCartButton");
 
     addToCartButton.addEventListener("click", function () {
 
-        cartItems.push(product);
-
-        console.log("Cart:", cartItems);
+        addToCart(product);
 
     });
 
 
-    // Back button
+    // Back
     const backButton =
         document.querySelector("#backButton");
 
     backButton.addEventListener("click", function () {
 
-        // Hide product details
-        productDetails.style.display = "none";
-
-
-        // Show search bar again
-        search.style.display = "flex";
-
-
-        // Show product list again
-        productList.style.display = "grid";
-
-
-        // Show pagination again
-        footer.style.display = "flex";
+        showProductList();
 
     });
 
 }
 
 
-// Render pagination
+// Add product to cart
+function addToCart(product) {
+
+    // Check whether product already exists
+    const existingProduct = cartItems.find(function (item) {
+
+        return item.id === product.id;
+
+    });
+
+
+    if (existingProduct) {
+
+        existingProduct.quantity++;
+
+    }
+    else {
+
+        cartItems.push({
+
+            ...product,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+// Update cart count
+function updateCartCount() {
+
+    const cartCount =
+        document.querySelector("#cartCount");
+
+    let totalItems = 0;
+
+
+    cartItems.forEach(function (item) {
+
+        totalItems += item.quantity;
+
+    });
+
+
+    cartCount.innerText = totalItems;
+
+}
+
+
+// Show cart
+function showCart() {
+
+    const search = document.querySelector(".search");
+
+    const productList = document.querySelector(".cart");
+
+    const productDetails =
+        document.querySelector("#productDetails");
+
+    const cartSection =
+        document.querySelector("#cartSection");
+
+    const footer =
+        document.querySelector(".footer");
+
+
+    // Hide other sections
+    search.style.display = "none";
+
+    productList.style.display = "none";
+
+    productDetails.style.display = "none";
+
+    footer.style.display = "none";
+
+
+    // Show cart
+    cartSection.style.display = "block";
+
+
+    renderCart();
+
+}
+
+
+// Display cart items
+function renderCart() {
+
+    const cartItemsContainer =
+        document.querySelector("#cartItems");
+
+    const totalItemsElement =
+        document.querySelector("#totalItems");
+
+    const totalPriceElement =
+        document.querySelector("#totalPrice");
+
+
+    cartItemsContainer.innerHTML = "";
+
+
+    // Empty cart
+
+if (cartItems.length === 0) {
+
+    const summaryBox =
+        document.querySelector(".cart-summary");
+
+    const continueShoppingButton =
+        document.querySelector("#continueShoppingButton");
+
+
+    cartItemsContainer.innerHTML = `
+
+        <p class="empty-cart">
+            Your cart is empty.
+        </p>
+        <div id="emptybackDiv">
+        <button id="emptybackButton">
+            Continue shopping!
+        </button>
+        </div>
+
+    `;
+
+
+    // Hide summary
+    summaryBox.style.display = "none";
+
+    // Back button
+    const emptyCartBackButton =
+        document.querySelector("#emptybackButton");
+
+    emptyCartBackButton.addEventListener("click", function () {
+
+        showProductList();
+
+    });
+
+
+    return;
+
+}
+
+
+
+    let totalItems = 0;
+
+    let totalPrice = 0;
+
+
+    cartItems.forEach(function (item, index) {
+
+        const itemTotal =
+            item.price * item.quantity;
+
+
+        totalItems += item.quantity;
+
+        totalPrice += itemTotal;
+
+
+        const cartItem =
+            document.createElement("div");
+
+        cartItem.className = "cart-item";
+
+
+        cartItem.innerHTML = `
+
+            <img
+                src="${item.thumbnail}"
+                alt="${item.title}"
+            >
+
+            <div class="cart-item-info">
+
+                <h3>${item.title}</h3>
+
+                <p>
+                    Price: $${item.price}
+                </p>
+
+            </div>
+
+
+            <div class="quantity">
+
+                <button class="minus-button">
+                    -
+                </button>
+
+                <span>
+                    ${item.quantity}
+                </span>
+
+                <button class="plus-button">
+                    +
+                </button>
+
+            </div>
+
+
+            <p class="item-total">
+
+                $${itemTotal.toFixed(2)}
+
+            </p>
+
+
+            <button class="remove-button">
+                Remove
+            </button>
+
+        `;
+
+
+        // Minus button
+        const minusButton =
+            cartItem.querySelector(".minus-button");
+
+        minusButton.addEventListener("click", function () {
+
+            decreaseQuantity(index);
+
+        });
+
+
+        // Plus button
+        const plusButton =
+            cartItem.querySelector(".plus-button");
+
+        plusButton.addEventListener("click", function () {
+
+            increaseQuantity(index);
+
+        });
+
+
+        // Remove button
+        const removeButton =
+            cartItem.querySelector(".remove-button");
+
+        removeButton.addEventListener("click", function () {
+
+            removeFromCart(index);
+
+        });
+
+
+        cartItemsContainer.appendChild(cartItem);
+
+    });
+
+
+    // Update total
+    totalItemsElement.innerText = totalItems;
+
+    totalPriceElement.innerText =
+        totalPrice.toFixed(2);
+
+}
+
+
+// Increase quantity
+function increaseQuantity(index) {
+
+    cartItems[index].quantity++;
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+// Decrease quantity
+function decreaseQuantity(index) {
+
+    if (cartItems[index].quantity > 1) {
+
+        cartItems[index].quantity--;
+
+    }
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+// Remove product from cart
+function removeFromCart(index) {
+
+    cartItems.splice(index, 1);
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+// Show product list
+function showProductList() {
+
+    const search = document.querySelector(".search");
+
+    const productList = document.querySelector(".cart");
+
+    const productDetails =
+        document.querySelector("#productDetails");
+
+    const cartSection =
+        document.querySelector("#cartSection");
+
+    const footer =
+        document.querySelector(".footer");
+
+
+    // Hide other sections
+    productDetails.style.display = "none";
+
+    cartSection.style.display = "none";
+
+
+    // Show product list
+    search.style.display = "flex";
+
+    productList.style.display = "grid";
+
+    footer.style.display = "flex";
+
+}
+
+
+// Pagination
 function renderPagination() {
 
     const pageNumbers =
@@ -257,9 +596,14 @@ function renderPagination() {
 
 
     // Create page buttons
-    for (let page = startPage; page <= endPage; page++) {
+    for (
+        let page = startPage;
+        page <= endPage;
+        page++
+    ) {
 
-        const button = document.createElement("button");
+        const button =
+            document.createElement("button");
 
         button.innerText = page;
 
@@ -376,5 +720,64 @@ searchButton.addEventListener("click", function () {
 });
 
 
+// Cart button
+const cartButton =
+    document.querySelector("#cartButton");
+
+cartButton.addEventListener("click", function () {
+
+    showCart();
+
+});
+
+
+// Continue Shopping
+const continueShoppingButton =
+    document.querySelector("#continueShoppingButton");
+
+continueShoppingButton.addEventListener(
+    "click",
+    function () {
+
+        showProductList();
+
+    }
+);
+
+
+// Buy button
+const buyButton =
+    document.querySelector("#buyButton");
+
+buyButton.addEventListener("click", function () {
+
+    if (cartItems.length === 0) {
+
+        return;
+
+    }
+
+
+    const cartItemsContainer =
+        document.querySelector("#cartItems");
+
+    cartItemsContainer.innerHTML = `
+
+        <div class="purchase-message">
+
+            <h3>Order placed successfully!</h3>
+
+            <p>
+                Thank you for your purchase.
+            </p>
+
+        </div>
+
+    `;
+
+});
+
+
 // Load first page
 renderData(currentPage);
+

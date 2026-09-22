@@ -3,8 +3,6 @@
     width: 90%;
 
     margin: auto;
-    font-family: 'Times New Roman', Times, serif;
-    
 
 }
 
@@ -151,6 +149,177 @@
 }
 
 
+/* Cart */
+
+#cartSection {
+
+    display: none;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+}
+
+#cartSection h2 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* Cart Item */
+
+.cart-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    border: 1px solid black;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+}
+
+.cart-item img {
+
+    width: 100px;
+
+    height: 100px;
+
+    object-fit: contain;
+
+}
+
+.cart-item-info {
+
+    flex: 1;
+
+}
+
+.cart-item-info h3 {
+
+    margin: 0 0 10px 0;
+
+}
+
+
+/* Quantity */
+
+.quantity {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.quantity button {
+
+    width: 30px;
+
+    height: 30px;
+
+    cursor: pointer;
+
+}
+
+.quantity span {
+
+    min-width: 20px;
+
+    text-align: center;
+
+}
+
+
+/* Item Total */
+
+.item-total {
+
+    width: 100px;
+
+    font-weight: bold;
+
+}
+
+
+/* Remove */
+
+.remove-button {
+
+    padding: 8px 12px;
+
+    cursor: pointer;
+
+}
+
+
+/* Cart Summary */
+
+.cart-summary {
+
+    border: 2px solid black;
+
+    padding: 20px;
+
+    margin-top: 30px;
+
+    text-align: right;
+
+}
+
+.cart-summary p {
+
+    font-size: 18px;
+
+}
+
+
+/* Cart Buttons */
+
+.cart-summary button {
+
+    padding: 10px 20px;
+
+    margin-left: 10px;
+
+    cursor: pointer;
+
+}
+
+
+/* Empty Cart */
+
+.empty-cart {
+
+    text-align: center;
+
+    font-size: 20px;
+
+}
+
+
+/* Purchase Message */
+
+.purchase-message {
+
+    text-align: center;
+
+    padding: 30px;
+
+}
+
+
 /* Pagination */
 
 .footer {
@@ -190,7 +359,7 @@
 }
 
 
-/* Current page */
+/* Current Page */
 
 .page-numbers button.active {
 
@@ -201,7 +370,7 @@
 }
 
 
-/* Arrow buttons */
+/* Arrow Buttons */
 
 .arrow-button {
 
@@ -226,7 +395,7 @@
 }
 
 
-/* Arrow */
+/* Arrows */
 
 .arrow {
 
@@ -252,12 +421,47 @@
 
 }
 
-#addToCartButton{
-    background-color: rgb(12, 142, 12);
+#addToCartButton,#continueShoppingButton{
+    background-color: rgb(233, 81, 132);
     color: white;
+      border-radius: 8px
 }
 
 #backButton{
-     background-color:rgb(216, 8, 8);
+    background-color:black;
+    color: white;
+      border-radius: 8px
+}
+
+.remove-button{
+    background-color:rgb(216, 8, 8);
+    color: white;
+      border-radius: 8px
+}
+
+#cartButton{
+    background-color:rgb(210, 81, 35);
+    color: white;
+    border-radius: 8px
+}
+
+#buyButton{
+    background-color:rgb(38, 158, 166);
+    color: white;
+    border-radius: 8px
+}
+
+#emptybackDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#emptybackButton{
+    height: 50px;
+    width: 200px;
+    border-radius: 8px;
+    background-color:rgb(210, 81, 35);
     color: white;
 }
