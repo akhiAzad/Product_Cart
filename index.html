@@ -1,28 +1,75 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Products</title>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
+
     <div class="container">
+
+        <!-- Search -->
+
         <div class="search">
-            <input  type="text" id="searchInput" placeholder="Search products">
-            <button id="searchButton">Search</button>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products"
+            >
+
+            <button id="searchButton">
+                Search
+            </button>
+
         </div>
+
+
+        <!-- Product List -->
+
         <div class="cart"></div>
+
+
+        <!-- Product Details -->
+
+        <div id="productDetails"></div>
+
+
+        <!-- Pagination -->
+
         <div class="footer">
+
             <button class="arrow-button left-button">
-                 <i class="arrow left"></i>
+
+                <i class="arrow left"></i>
+
             </button>
+
             <div class="page-numbers"></div>
+
             <button class="arrow-button right-button">
+
                 <i class="arrow right"></i>
+
             </button>
+
         </div>
+
     </div>
+
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
