@@ -3,8 +3,8 @@ const pagesToShow = 5;
 let currentPage = 1;
 let totalPages = 1;
 let searchText = "";
-// Cart
 let cartItems = [];
+
 // Fetch products
 async function fetchData(page) {
     try {
@@ -58,34 +58,23 @@ async function renderData(page) {
 
 // Show product details
 function showProductDetails(product) {
-    const search = document.querySelector(".search");
     const productList = document.querySelector(".cart");
     const productDetails = document.querySelector("#productDetails");
     const cartSection = document.querySelector("#cartSection");
-    const footer = document.querySelector(".footer");
-    
-    // Hide other sections
-    search.style.display = "none";
+
+    // Hide other sections 
     productList.style.display = "none";
     cartSection.style.display = "none";
-    footer.style.display = "none";
-    
-    9// Show product details
+
+    // Show product details
     productDetails.style.display = "flex";
     productDetails.innerHTML = `
         <!-- Cart button -->
-        <div id="CartButDiv">
-            <button id="CartBut">
-                Cart (<span id="detailsCartCount">
-                    ${getTotalCartItems()}
-                </span>)
-            </button>
-        </div>
+       
         <div class="product-details">
             <img
                 src="${product.thumbnail}"
-                alt="${product.title}"
-            >
+                alt="${product.title}">
             <div class="product-info">
                 <h2>${product.title}</h2>
                 <p>${product.description}</p>
@@ -119,10 +108,10 @@ function showProductDetails(product) {
         </div>
     `;
     // Cart button
-    const cartButton = document.querySelector("#CartBut");
-    cartButton.addEventListener("click", function () {
-        showCart();
-    });
+    // const cartButtonInDetails = document.querySelector("#CartBut");
+    // cartButtonInDetails.addEventListener("click", function () {
+    //     showCart();
+    // });
     // Add to Cart
     const addToCartButton = document.querySelector("#addToCartButton");
     addToCartButton.addEventListener("click", function () {
@@ -171,16 +160,14 @@ function updateCartCount() {
 }
 // Show cart
 function showCart() {
-    const search = document.querySelector(".search");
     const productList = document.querySelector(".cart");
     const productDetails = document.querySelector("#productDetails");
     const cartSection = document.querySelector("#cartSection");
-    const footer = document.querySelector(".footer");
-    // Hide other sections
-    search.style.display = "none";
+
+    // Hide other sections 
     productList.style.display = "none";
     productDetails.style.display = "none";
-    footer.style.display = "none";
+
     // Show cart
     cartSection.style.display = "block";
     document.querySelector("#cartTitle").innerText = "Shopping Cart";
@@ -298,18 +285,16 @@ function removeFromCart(index) {
 }
 // Show product list
 function showProductList() {
-    const search = document.querySelector(".search");
     const productList = document.querySelector(".cart");
     const productDetails = document.querySelector("#productDetails");
     const cartSection = document.querySelector("#cartSection");
-    const footer = document.querySelector(".footer");
+
     // Hide other sections
     productDetails.style.display = "none";
     cartSection.style.display = "none";
-    // Show product list
-    search.style.display = "flex";
+
+    // Show product list 
     productList.style.display = "grid";
-    footer.style.display = "flex";
 }
 // Pagination
 function renderPagination() {
@@ -389,6 +374,17 @@ const searchButton = document.querySelector("#searchButton");
 searchButton.addEventListener("click",function () {
         searchText = document.querySelector("#searchInput").value.trim();
         currentPage = 1;
+        showProductList();
+        renderData(currentPage);
+    }
+);
+// Home button
+const homeButton = document.querySelector("#homeButton");
+homeButton.addEventListener("click", function () {
+        searchText = "";
+        document.querySelector("#searchInput").value = "";
+        currentPage = 1;
+        showProductList();
         renderData(currentPage);
     }
 );
@@ -401,9 +397,7 @@ cartButton.addEventListener("click",function () {
 // Continue Shopping
 const continueShoppingButton =
     document.querySelector("#continueShoppingButton");
-continueShoppingButton.addEventListener(
-    "click",
-    function () {
+continueShoppingButton.addEventListener("click", function () {
         showProductList();
     }
 );
@@ -415,27 +409,18 @@ buyButton.addEventListener(
         if (cartItems.length === 0) {
             return;
         }
-        // Change title
-        document.querySelector("#cartTitle").innerText =
-            "Order Placed";
-        // Hide Buy button
+        document.querySelector("#cartTitle").innerText = "Order Placed";
         buyButton.style.display = "none";
-        // Change Continue Shopping button
-        document.querySelector(
-            "#continueShoppingButton"
+        document.querySelector( "#continueShoppingButton"
         ).innerText = "Continue Shopping";
-        // Keep the product summary
         renderOrderSummary();
     }
 );
 // Order summary after purchase
 function renderOrderSummary() {
-    const cartItemsContainer =
-        document.querySelector("#cartItems");
-    const summaryBody =
-        document.querySelector("#summaryBody");
-    const summaryTotal =
-        document.querySelector("#summaryTotal");
+    const cartItemsContainer = document.querySelector("#cartItems");
+    const summaryBody = document.querySelector("#summaryBody");
+    const summaryTotal = document.querySelector("#summaryTotal");
     cartItemsContainer.innerHTML = `
         <div class="purchase-message">
             <h3>
@@ -449,11 +434,9 @@ function renderOrderSummary() {
     summaryBody.innerHTML = "";
     let totalPrice = 0;
     cartItems.forEach(function (item) {
-        const itemTotal =
-            item.price * item.quantity;
+        const itemTotal = item.price * item.quantity;
         totalPrice += itemTotal;
-        const row =
-            document.createElement("tr");
+        const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.title}</td>
             <td>$${item.price.toFixed(2)}</td>
@@ -462,11 +445,8 @@ function renderOrderSummary() {
         `;
         summaryBody.appendChild(row);
     });
-    summaryTotal.innerText =
-        totalPrice.toFixed(2);
-    document.querySelector(
-        "#summarySection"
-    ).style.display = "block";
+    summaryTotal.innerText = totalPrice.toFixed(2);
+    document.querySelector("#summarySection").style.display = "block";
 }
 // Load first page
 renderData(currentPage);
