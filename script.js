@@ -107,17 +107,10 @@ function showProductDetails(product) {
             </div>
         </div>
     `;
-    // Cart button
-    // const cartButtonInDetails = document.querySelector("#CartBut");
-    // cartButtonInDetails.addEventListener("click", function () {
-    //     showCart();
-    // });
     // Add to Cart
     const addToCartButton = document.querySelector("#addToCartButton");
     addToCartButton.addEventListener("click", function () {
         addToCart(product);
-        document.querySelector("#detailsCartCount").innerText =
-            getTotalCartItems();
     });
     // Back
     const backButton = document.querySelector("#backButton");

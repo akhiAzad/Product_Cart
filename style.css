@@ -104,16 +104,6 @@ body {
     right: 20px;
 }
 
-#CartBut {
-    padding: 10px 20px;
-    background-color: rgb(210, 81, 35);
-    color: white;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-
 .product-details {
     display: flex;
     align-items: center;
